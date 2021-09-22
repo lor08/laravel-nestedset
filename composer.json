@@ -1,0 +1,32 @@
+{
+    "name": "fawest/laravel-nestedset",
+    "description": "Nested Set Model for Laravel 7 and up",
+    "keywords": ["laravel", "nested sets", "nsm", "database", "hierarchy"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lor08",
+            "email": "spike.09@ya.ru"
+        }
+    ],
+    "require": {
+        "php": "^7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fawest\\Nestedset\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Fawest\\Nestedset\\NestedSetServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
