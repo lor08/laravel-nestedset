@@ -23,9 +23,8 @@ class CreateCategoriesTables extends Migration
 		});
 
 		Schema::create('categorize', function (Blueprint $table) {
+		    $table->morphs('categorize');
 		    $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-			$table->morphs('categorize');
-
             $table->unique(['category_id', 'categorize_id', 'categorize_type']);
 		});
     }
@@ -33,6 +32,6 @@ class CreateCategoriesTables extends Migration
     public function down()
     {
 		Schema::dropIfExists('categories');
-		Schema::dropIfExists('categories_relations');
+		Schema::dropIfExists('categorize');
     }
 }

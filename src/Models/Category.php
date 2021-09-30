@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Model;
 use Fawest\Nestedset\NodeTrait;
+use Illuminate\Support\Str;
 use Request;
 
 class Category extends Model
@@ -25,7 +26,7 @@ class Category extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function categorizable(): MorphTo
+    public function categorize(): MorphTo
     {
         return $this->morphTo();
     }
@@ -37,7 +38,7 @@ class Category extends Model
      */
     public function entries(string $class): MorphToMany
     {
-        return $this->morphedByMany($class, 'categorizable', 'categories_relations');
+        return $this->morphedByMany($class, 'categorize', 'categories_relations');
     }
 
     /**
@@ -48,12 +49,11 @@ class Category extends Model
         return static::get()->toTree()->toArray();
     }
 
-    public function setSlugAttribute($slug)
+    public function setSlugAttribute(string|null $slug = ''): void
     {
         $slugCollections = $this->getAncestors()->pluck('slug')->toArray();
 
-        if ($slug == '') $slug = str_slug(Request::get('name'), '_');
-//		$slug = str_slug(Request::get('name'), '_');
+        if ($slug == '') $slug = Str::slug(Request::get('name'), '_');
         if ($cat = self::where('slug', $slug)->first()) {
             $idmax = self::max('id') + 1;
             if (isset($this->attributes['id'])) {
